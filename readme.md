@@ -63,3 +63,28 @@ and this into `nightwatch.js`
 #!/usr/bin/env node
 require('nightwatch/bin/runner.js')
 ```
+So now you can add this config to the package.json file
+```
+"scripts": {
+    "test": "./nightwatch.js --test tests/*.js"
+  }
+```
+Now you can run tests with `npm test` here is an inital test to past into `exampleTest.js`
+```
+module.exports = {
+  'Demo test Google' : function (client) {
+    client
+      .url('http://www.google.com')
+      .waitForElementVisible('body', 1000)
+      .assert.title('Google')
+      .assert.visible('input[type=text]')
+      .setValue('input[type=text]', 'rembrandt van rijn')
+      .waitForElementVisible('button[name=btnG]', 1000)
+      .click('button[name=btnG]')
+      .pause(1000)
+      .assert.containsText('ol#rso li:first-child',
+        'Rembrandt - Wikipedia')
+      .end();
+  }
+};
+```
